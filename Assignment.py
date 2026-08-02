@@ -14,7 +14,7 @@ print(home_work1.score)   # Output: 85.0
 print(home_work1.max_score)  # Output: 100.0
 print(home_work1.due_date)  # Output: 2023-09-15
 print(home_work1.type)    # Output: Homework
-class Home_work(Assignment):
+class Home_work(Assignment):# Inheriting the Assignment class to create a subclass for Homework assignments.
     def __init__(self, subject, title, score, max_score, due_date):
         super().__init__(subject, title, score, max_score, due_date, "Homework") 
 Homework2=Home_work("Chemistry", "Isotopes Homework 2", 90, 100, "2023-09-22") 
