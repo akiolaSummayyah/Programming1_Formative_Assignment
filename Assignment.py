@@ -243,4 +243,20 @@ while True:
     elif choice == "6":
         print("Exiting the Grade Tracker. Goodbye!")
         break
+    def per_subject_average(self):
+        subject_scores = {}
+        subject_max_scores = {}
+        for assignment in self.assignments:
+            if assignment.subject not in subject_scores:
+                subject_scores[assignment.subject] = 0
+                subject_max_scores[assignment.subject] = 0
+            subject_scores[assignment.subject] += assignment.score
+            subject_max_scores[assignment.subject] += assignment.max_score
+        averages = {}
+        for subject in subject_scores:
+            if subject_max_scores[subject] > 0:
+                averages[subject] = (subject_scores[subject] / subject_max_scores[subject]) * 100
+            else:
+                averages[subject] = 0
+        return averages
 
