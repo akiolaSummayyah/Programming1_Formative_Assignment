@@ -1,6 +1,11 @@
 # This is the Blueprint for this assignment.
 from typing import Any
 
+print("Hello there!")
+print("Welcome to the Grade Tracker!")
+print("This program allows you to track your assignments, calculate averages, and filter assignments based on various criteria.")
+print("Enter your assignments and see how you are doing in each subject!")
+
 
 class Assignment: 
     def __init__(self, subject, title, score, max_score, due_date , assignment_type):
@@ -26,6 +31,7 @@ print(home_work1.due_date)
  # Output: 2023-09-15
 print(home_work1.type)  
   # Output: Homework
+
 class Home_work(Assignment):
 
 # Inheriting the Assignment class to create a subclass for Homework assignments.
@@ -125,6 +131,23 @@ class GradeTracker:
             if assignment.score < lowest.score:
                 lowest = assignment
         return lowest
+    
+    def per_subject_average(self):
+            subject_scores = {}
+            subject_max_scores = {}
+            for assignment in self.assignments:
+                if assignment.subject not in subject_scores:
+                    subject_scores[assignment.subject] = 0
+                    subject_max_scores[assignment.subject] = 0
+                subject_scores[assignment.subject] += assignment.score
+                subject_max_scores[assignment.subject] += assignment.max_score
+            averages = {}
+            for subject in subject_scores:
+                if subject_max_scores[subject] > 0:
+                    averages[subject] = (subject_scores[subject] / subject_max_scores[subject]) * 100
+                else:
+                    averages[subject] = 0
+            return averages
 #below code if for testing the filter_assignments method by filtering assignments based on type, subject, and month .
 tracker=GradeTracker() 
 #creating an object or instance of the GradeTracker class.
@@ -150,6 +173,8 @@ highest_assignment =tracker.highest_score_assignment()
 print(f"\nHighest score assignment: Subject: {highest_assignment.subject}, Title: {highest_assignment.title}, Score: {highest_assignment.score}/{highest_assignment.max_score}, Due Date: {highest_assignment.due_date}, Type: {highest_assignment.type}")
 lowest_assignment = tracker.lowest_score_assignment() 
 print(f"\nLowest score assignment: Subject: {lowest_assignment.subject}, Title: {lowest_assignment.title}, Score: {lowest_assignment.score}/{lowest_assignment.max_score}, Due Date: {lowest_assignment.due_date}, Type: {lowest_assignment.type}")  
+
+
 
 def get_non_empty_input(message: str) -> str:
     while True:
@@ -219,6 +244,7 @@ def display_menu():#This one represents the menu that is displayed to the user w
     print("5. Show Summary")
     print("6. Exit")
     print("Please choose an option (1-6):")
+    
 while True:
     display_menu()
     choice = input("Enter your choice (1-6): ").strip()
@@ -236,27 +262,17 @@ while True:
         filter_assignments_menu(tracker) 
     elif choice == "5":
         print(f"Overall average score: {tracker.calculate_average():.2f}%")
+        subject_averages = tracker.per_subject_average()
+        for subject, average in subject_averages.items():
+            print(f"Average score for {subject}: {average:.2f}%")
         highest_assignment = tracker.highest_score_assignment()
         lowest_assignment = tracker.lowest_score_assignment()
         print(f"Highest assignment: {highest_assignment.title} with a score of {highest_assignment.score}/{highest_assignment.max_score}")
         print(f"Lowest assignment: {lowest_assignment.title} with a score of {lowest_assignment.score}/{lowest_assignment.max_score}")
     elif choice == "6":
         print("Exiting the Grade Tracker. Goodbye!")
-        break
-    def per_subject_average(self):
-        subject_scores = {}
-        subject_max_scores = {}
-        for assignment in self.assignments:
-            if assignment.subject not in subject_scores:
-                subject_scores[assignment.subject] = 0
-                subject_max_scores[assignment.subject] = 0
-            subject_scores[assignment.subject] += assignment.score
-            subject_max_scores[assignment.subject] += assignment.max_score
-        averages = {}
-        for subject in subject_scores:
-            if subject_max_scores[subject] > 0:
-                averages[subject] = (subject_scores[subject] / subject_max_scores[subject]) * 100
-            else:
-                averages[subject] = 0
-        return averages
+        print("Thank you for using the Grade Tracker! We hope it helped you keep track of your assignments and scores. Goodbye and do have a great day!")
 
+        break
+    else:
+        print(" Whoops! Invalid choice. Please enter a number between 1 and 6.")
